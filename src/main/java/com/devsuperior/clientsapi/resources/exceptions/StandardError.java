@@ -1,8 +1,9 @@
 package com.devsuperior.clientsapi.resources.exceptions;
 
+import java.io.Serializable;
 import java.time.Instant;
 
-public class StandardError {
+public class StandardError implements Serializable{
 
     private static final long seriaLVersionUID = 1L;
 
