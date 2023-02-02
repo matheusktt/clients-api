@@ -10,7 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.module.ResolutionException;
 import java.util.Optional;
 
 @Service
@@ -21,14 +20,35 @@ public class ClientService {
 
     @Transactional(readOnly = true)
     public Page<ClientDTO> findAllPaged(PageRequest pageRequest) {
+
         Page<Client> list = repository.findAll(pageRequest);
+
         return list.map(listDTO -> new ClientDTO(listDTO));
     }
 
     @Transactional(readOnly = true)
     public ClientDTO findById(Long id) {
+
         Optional<Client> client = repository.findById(id);
+
         Client entity = client.orElseThrow(() -> new ResourceNotFoundException("Client not found"));
+
+        return new ClientDTO(entity);
+    }
+
+    @Transactional
+    public ClientDTO insert (ClientDTO dto) {
+
+        Client entity = new Client();
+
+        entity.setName(dto.getName());
+        entity.setCpf(dto.getCpf());
+        entity.setIncome(dto.getIncome());
+        entity.setBirthDate(dto.getBirthDate());
+        entity.setChildren(dto.getChildren());
+
+        entity = repository.save(entity);
+
         return new ClientDTO(entity);
     }
 }
