@@ -79,7 +79,7 @@ public class ClientService {
         try {
             repository.deleteById(id);
         } catch (EmptyResultDataAccessException error) {
-            throw new ResourceNotFoundException("Id not found: " + id);
+            throw new ResourceNotFoundException("Client not found: " + id);
         } catch (DataIntegrityViolationException error) {
             throw new DatabaseException("Integrity violation");
         }
